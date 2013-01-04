@@ -12,7 +12,7 @@ Instalation
 Add to deps::
 
     [SMMemcacheBundle]
-        git=git://github.com/tarjei/MemcacheBundle.git
+        git=git://github.com/npotier/MemcacheBundle.git
         target=/bundles/SM/MemcacheBundle
 
 
@@ -43,21 +43,18 @@ In your prod/dev environment::
     # app/config/config.yml
     sm_memcache:
         use_mock: false
-        port: 11211
-        host: localhost
-
-In your test environment::
-
-    # app/config/config.yml
-    sm_memcache:
-        use_mock: true
+        instances:
+            myinstancename:
+                port: 11211
+                host: localhost
 
 Usage
 -----
 
-The service is named sm_memcache, it returns a normal \Memcache or \Memcached php object::
+The service is named sm_memcache, it returns a MemcacheInstance
 
-    $memcached = $container->get("sm_memcache");
+    $memcacheInstance = $container->get("sm_memcache"); // MemcacheInstance
+    $memcached $memcacheInstance->getInstance("myinstancename"); //it returns a normal Memcache or Memcached php object:
     $memcached->set("someKey", "somevalue");
 
 
@@ -88,5 +85,4 @@ If you use Memcache class, options block is ignored.
 
 TODO
 ----
- * Support multiple memcache servers.
  * Support more methods in the mock module.

@@ -19,27 +19,8 @@ class MemcacheFactory
      * @throws \Exception if unable to connect to memcache
      * @return object
      */
-    public static function create($host, $port, $use_mock, $memcacheClass, array $options = array())
+    public static function create($config, $options)
     {
-        if ($use_mock) {
-            return new MockMemcache;
-        }
-        
-        $memcache = new $memcacheClass();
-
-        if ($memcache instanceof \Memcache) {
-            /** @var \Memcache $memcache */
-            if (!$memcache->connect($host, $port)) {
-                throw new \Exception("Could not connect to memcache service on $host:$port");
-            }
-        } else {
-            /** @var \Memcached $memcache */
-            $memcache->addServer($host, $port);
-            foreach ($options as $optionName => $optionValue) {
-                $memcache->setOption($optionName, $optionValue);
-            }
-        }
-
-        return $memcache;
+		return new MemcacheInstance($config, $options);
     }
 }

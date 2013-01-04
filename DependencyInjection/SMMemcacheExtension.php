@@ -27,7 +27,7 @@ class SMMemcacheExtension extends Extension
 
         if (!$config['use_mock']) {
             if (false == (isset($config['class']) && $config['class'] != "" && class_exists($config['class']))) {
-                /* we prefer the new Extension. */
+                // we prefer the new Extension. 
                 if (class_exists('\\Memcached')) {
                     $config['class']= 'Memcached';
                 } elseif (class_exists('Memcache')) {
@@ -37,11 +37,12 @@ class SMMemcacheExtension extends Extension
                 }
             }
         }
-        $container->setParameter('sm_memcache.host', $config['host']);
-        $container->setParameter('sm_memcache.port', $config['port']);
-        $container->setParameter('sm_memcache.use_mock', $config['use_mock']);
-        $container->setParameter('sm_memcache.factory', $config['factory']);
-        $container->setParameter('sm_memcache.class', $config['class']);
+        //$container->setParameter('sm_memcache.host', $config['host']);
+        //$container->setParameter('sm_memcache.port', $config['port']);
+        $container->setParameter('sm_memcache.config', $config);
+        //$container->setParameter('sm_memcache.instances', $config['instances']);
+        //$container->setParameter('sm_memcache.factory', $config['factory']);
+        //$container->setParameter('sm_memcache.class', $config['class']);
         $definition = $container->getDefinition('sm_memcache');
         $definition->setClass($config['class']);
         $options = array();
@@ -50,6 +51,7 @@ class SMMemcacheExtension extends Extension
             $optionValue = constant('Memcached::' . strtoupper($option['value']));
             $options[$optionName] = $optionValue;
         }
-        $definition->replaceArgument(4, $options);
+        $definition->replaceArgument(0, $config);
+        $definition->replaceArgument(1, $options);
     }
 }
