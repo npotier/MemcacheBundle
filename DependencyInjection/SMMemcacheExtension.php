@@ -27,7 +27,7 @@ class SMMemcacheExtension extends Extension
 
         if (!$config['use_mock']) {
             if (false == (isset($config['class']) && $config['class'] != "" && class_exists($config['class']))) {
-                // we prefer the new Extension. 
+                // we prefer the new Extension.
                 if (class_exists('\\Memcached')) {
                     $config['class']= 'Memcached';
                 } elseif (class_exists('Memcache')) {
@@ -46,7 +46,7 @@ class SMMemcacheExtension extends Extension
         $definition = $container->getDefinition('sm_memcache');
         $definition->setClass($config['class']);
         $options = array();
-        foreach($config['options'] as $option) {
+        foreach ($config['options'] as $option) {
             $optionName = constant('Memcached::OPT_' . strtoupper($option['name']));
             $optionValue = constant('Memcached::' . strtoupper($option['value']));
             $options[$optionName] = $optionValue;

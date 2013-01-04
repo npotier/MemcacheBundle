@@ -9,7 +9,7 @@
         <parameter key="sm_memcache.instances" />
         <parameter key="sm_memcache.factory" >SM\MemcacheBundle\MemcacheFactory</parameter>
         <parameter key="sm_memcache.class" />
-        
+
     </parameters>
 
     <services>
